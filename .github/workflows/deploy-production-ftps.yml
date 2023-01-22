@@ -1,0 +1,27 @@
+name: 🚀 Deploy to production
+
+on:
+  push:
+    branches:
+      - ftps
+
+jobs:
+  deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Switch to master branch
+        uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: 🔼 Transfer via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_PROD_SERVER_DIR }}
+          protocol: ${{ secrets.FTP_PROTOCOL }}
+          port: ${{ secrets.FTP_PORT }}
+          log-level: ${{ secrets.FTP_LOG_LEVEL }}
