@@ -1,4 +1,4 @@
-name: 🚀 Deploy to production
+name: 🚀 Deploy to production (SFTP)
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Switch to master branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
 
@@ -23,4 +23,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           remoteDir: ${{ secrets.FTP_PROD_SERVER_DIR }}
-          exclude: ".git*"
+          exclude: ".git*,.env*"
+          dryRun: ${{ secrets.FTP_DRY_RUN }}
